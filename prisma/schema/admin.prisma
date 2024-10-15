@@ -1,0 +1,17 @@
+model admin {
+    id            Int       @id() @default(autoincrement())
+    created_at    DateTime  @default(now())
+    updated_at    DateTime  @updatedAt
+    national_code String    @unique
+    mobile_number String    @unique
+    email         String    @unique
+    first_name    String
+    last_name     String
+    birth_date    DateTime?
+    role          role_enum @default(ADMIN)
+}
+
+enum role_enum {
+    SUPER_ADMIN
+    ADMIN
+}
