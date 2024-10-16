@@ -1,0 +1,7 @@
+enum active_status_enum {
+    ACTIVE
+    DE_ACTIVE
+    BLOCK
+
+    @@schema("common")
+}

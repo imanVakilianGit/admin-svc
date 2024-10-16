@@ -1,17 +1,23 @@
 model admin {
-    id            Int       @id() @default(autoincrement())
-    created_at    DateTime  @default(now())
-    updated_at    DateTime  @updatedAt
-    national_code String    @unique
-    mobile_number String    @unique
-    email         String    @unique
+    id            Int                @id() @default(autoincrement())
+    created_at    DateTime           @default(now())
+    updated_at    DateTime           @default(now()) @updatedAt
+    national_code String             @unique
+    mobile_number String             @unique
+    email         String             @unique
     first_name    String
     last_name     String
     birth_date    DateTime?
-    role          role_enum @default(ADMIN)
+    role          admin_role_enum    @default(ADMIN)
+    is_valid      Boolean            @default(false)
+    active_status active_status_enum @default(ACTIVE)
+
+    @@schema("common")
 }
 
-enum role_enum {
+enum admin_role_enum {
     SUPER_ADMIN
     ADMIN
+
+    @@schema("common")
 }
