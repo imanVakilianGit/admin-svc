@@ -1,4 +1,4 @@
-import { admin, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { CreateAdminProfileDto } from '../../profile/common/dto/create.dto';
 import { UpdateAdminProfileDto } from '../../profile/common/dto/update.dto';

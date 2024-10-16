@@ -12,7 +12,7 @@ export class DbPrismaService extends PrismaClient implements OnModuleInit {
             await this.$connect();
             this.logger.log('prisma connected successfully');
         } catch (error) {
-            this.logger.error('prisma connection failed');
+            this.logger.error('prisma connection failed', error);
         }
     }
 }
