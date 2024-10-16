@@ -1,19 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { RpcException, TcpOptions, Transport } from '@nestjs/microservices';
-import { ValidationPipe } from '@nestjs/common';
+import { INestMicroservice, ValidationError, ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 import { APP_NAME } from './common/constant/service-name.constant';
+import { GlobalResponseInterceptor } from './common/interceptor/global-response.interceptor';
 
 async function bootstrap(): Promise<void> {
     const port: number = Number(process.env.APP_PORT);
 
-    const app = await NestFactory.createMicroservice<TcpOptions>(AppModule, {
+    const app: INestMicroservice = await NestFactory.createMicroservice<TcpOptions>(AppModule, {
         transport: Transport.TCP,
         options: {
             port,
         },
     });
+
+    app.useGlobalInterceptors(new GlobalResponseInterceptor());
 
     app.useGlobalPipes(
         new ValidationPipe({
@@ -23,7 +26,7 @@ async function bootstrap(): Promise<void> {
             forbidNonWhitelisted: true,
             forbidUnknownValues: true,
             disableErrorMessages: true,
-            exceptionFactory: (errors) => {
+            exceptionFactory: (errors: ValidationError[]): RpcException => {
                 console.log(new Date().toLocaleString('fa'), ' ------ validation error: ', errors);
                 return new RpcException({
                     service: APP_NAME,
