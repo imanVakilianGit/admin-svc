@@ -1,3 +1,3 @@
-import { DbPrismaModule } from '../db-prisma/db-prisma.module';
+import { ProfileModule } from '../profile/profile.module';
 
-export const staticModules = [DbPrismaModule];
+export const staticModules = [ProfileModule];
