@@ -18,6 +18,7 @@ export class AuthQueryBuilder {
         };
     }
 
+    // todo: update
     upsert(adminId: number, data: UserAgentDto & { token: string }): Prisma.admins_on_refresh_tokensUpsertArgs<DefaultArgs> {
         return {
             where: {
@@ -31,7 +32,13 @@ export class AuthQueryBuilder {
                 browser: data.browser,
                 admin: { connect: { id: adminId } },
             } as Prisma.admins_on_refresh_tokensCreateInput,
-            update: {},
+            update: {
+                token: data.token,
+                user_agent: data.userAgent,
+                os: data.os,
+                ip: data.ip,
+                browser: data.browser,
+            },
         };
     }
 
