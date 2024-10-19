@@ -1,16 +1,31 @@
 model admin {
-    id            Int                @id() @default(autoincrement())
-    created_at    DateTime           @default(now())
-    updated_at    DateTime           @default(now()) @updatedAt
-    national_code String             @unique
-    mobile_number String             @unique
-    email         String             @unique
+    id            Int                       @id() @default(autoincrement())
+    created_at    DateTime                  @default(now())
+    updated_at    DateTime                  @default(now()) @updatedAt
+    national_code String                    @unique
+    mobile_number String                    @unique
+    email         String                    @unique
     first_name    String
     last_name     String
     birth_date    DateTime?
-    role          admin_role_enum    @default(ADMIN)
-    is_valid      Boolean            @default(false)
-    active_status active_status_enum @default(ACTIVE)
+    role          admin_role_enum           @default(ADMIN)
+    active_status active_status_enum        @default(ACTIVE)
+    refresh_token admins_on_refresh_tokens?
+
+    @@schema("common")
+}
+
+model admins_on_refresh_tokens {
+    id         Int      @id() @default(autoincrement())
+    created_at DateTime @default(now())
+    updated_at DateTime @default(now()) @updatedAt
+    admin_id   Int      @unique
+    token      String
+    user_agent String
+    os         String
+    ip         String
+    browser    String
+    admin      admin    @relation(fields: [admin_id], references: [id])
 
     @@schema("common")
 }
