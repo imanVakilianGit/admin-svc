@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
+
 import { CreateAdminProfileDto } from '../../profile/common/dto/create.dto';
 import { UpdateAdminProfileDto } from '../../profile/common/dto/update.dto';
 
@@ -33,6 +34,14 @@ export class ProfileQueryBuilder {
                 first_name: data.firstName,
                 last_name: data.lastName,
                 birth_date: data.birthDate,
+            },
+        };
+    }
+
+    checkExist(value: string): Prisma.adminFindFirstArgs<DefaultArgs> {
+        return {
+            where: {
+                OR: [{ mobile_number: value }, { email: value }],
             },
         };
     }
